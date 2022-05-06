@@ -14,7 +14,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', 'src')))
 
 # Now do your import
-from Food_Search import *
+from src.Food_Search import *
 
 def make_clickable(link):
     # target _blank to open new window
