@@ -104,6 +104,10 @@ Find the workflow here : https://github.com/AkankshaTelagamsetty12/Get-Cooking-/
 ## Test our aplication
 To run our application, click on this link : https://share.streamlit.io/niramay-kelkar/get_cooking/main/Streamlit/streamlit.py
 
+## Login credentials
+Username : jdoe
+Password : abcd
+
 ## Other useful links:
 - Link to codelabs : https://codelabs-preview.appspot.com/?file_id=1wDG5Zv-_qauEu3lgfElM2hEnYv1rx5L9cm4OHCesvGk#2
 - Link to Github issues : https://github.com/Niramay-Kelkar/Get-Cooking/projects/1
