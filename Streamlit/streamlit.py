@@ -355,8 +355,6 @@ if authentication_status:
 
             source_file_name = "UserRegistry.csv"
             blob.upload_from_filename('UserRegistry.csv')
-            
-            st.write('Registered SUccessfully!')
 
            
 elif authentication_status == False:
