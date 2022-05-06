@@ -1,4 +1,4 @@
-# Get-Cooking-
+# GetCooking
 
 Cooking Recommendations
 
