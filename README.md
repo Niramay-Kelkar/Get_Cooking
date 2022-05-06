@@ -80,6 +80,13 @@ If the user has no ingredients, provide recipes from cache
 Contains sample pytesting for the user input on Streamlit. The sample test cases and the status of the tests ran are uploaded in the same folder.
 
 #### Data Visualization
+- Geographical map - describes the location of the registered users
+- Stacked column chart - shows the people who are satisfied by the app and who are not
+- Pie Chart - shows the distribution of the users across different locations
+- Bar Graph - shows the number of people registered from each location
+
+<img width="817" alt="Visualization" src="https://user-images.githubusercontent.com/91446801/167113258-4f1073fb-26c1-4987-abf7-b933614f1a4e.png">
+
 
 ##### Details:
  - Once a new user registers, the user registry gets updated
