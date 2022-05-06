@@ -103,6 +103,7 @@ if authentication_status:
      'Do you have any ingredients? Worry not if you do no have them; we will suggest you some easy recipes!',
      ('Select','Yes', 'No'))
 
+    st.write('OR')
     container = st.container()
 
     if selection == 'Yes':
@@ -172,6 +173,8 @@ if authentication_status:
         recipe = df_random.to_html(escape=False)
         st.write(recipe, unsafe_allow_html=True)
         st.write(df_random)
+
+    container2 = st.container()
     
     st.markdown("### Browse collections! :eyes: ")
 
@@ -189,55 +192,56 @@ if authentication_status:
     st.write('You selected:', option)
     
     execute_browse = st.button("Browse!")
+    with st.container():
+        if execute_browse:
+            print(option)
 
-    if execute_browse:
-        print(option)
 
-
-        if option == "Seafood":
+            if option == "Seafood":
+                
+                collection = search_collections(option)
+                collection.head(5)
+                collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+                collection = collection.to_html(escape=False)
+                st.write(collection, unsafe_allow_html=True)
             
-            collection = search_collections(option)
-            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
-            collection = collection.to_html(escape=False)
-            st.write(collection, unsafe_allow_html=True)
-        
-        if option == "Soup":
+            if option == "Soup":
+                
+                collection = search_collections(option)
+                collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+                collection = collection.to_html(escape=False)
+                st.write(collection, unsafe_allow_html=True)
+
+
+            if option == "Curry":
+                
+                collection = search_collections(option)
+                collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+                collection = collection.to_html(escape=False)
+                st.write(collection, unsafe_allow_html=True)
+
+
+            if option == "Pasta":
+                
+                collection = search_collections(option)
+                collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+                collection = collection.to_html(escape=False)
+                st.write(collection, unsafe_allow_html=True)
             
-            collection = search_collections(option)
-            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
-            collection = collection.to_html(escape=False)
-            st.write(collection, unsafe_allow_html=True)
+            if option == "Salad":
+                
+                collection = search_collections(option)
+                collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+                collection = collection.to_html(escape=False)
+                st.write(collection, unsafe_allow_html=True)
 
 
-        if option == "Curry":
-            
-            collection = search_collections(option)
-            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
-            collection = collection.to_html(escape=False)
-            st.write(collection, unsafe_allow_html=True)
-
-
-        if option == "Pasta":
-            
-            collection = search_collections(option)
-            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
-            collection = collection.to_html(escape=False)
-            st.write(collection, unsafe_allow_html=True)
-        
-        if option == "Salad":
-            
-            collection = search_collections(option)
-            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
-            collection = collection.to_html(escape=False)
-            st.write(collection, unsafe_allow_html=True)
-
-
-        if option == "Chinese":
-            
-            collection = search_collections(option)
-            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
-            collection = collection.to_html(escape=False)
-            st.write(collection, unsafe_allow_html=True)
+            if option == "Chinese":
+                
+                collection = search_collections(option)
+                collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+                collection = collection.to_html(escape=False)
+                st.write(collection, unsafe_allow_html=True)
     
     with st.sidebar.expander("How it works?", expanded=True):
         st.markdown("## How it works? :thought_balloon:")
