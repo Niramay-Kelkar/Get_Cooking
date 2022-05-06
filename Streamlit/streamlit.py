@@ -1,5 +1,7 @@
+from email import message
 from pydoc import cli
 from random import sample
+from typing import ItemsView
 import streamlit as st
 from google.oauth2 import service_account
 from google.cloud import bigquery
@@ -10,11 +12,11 @@ import streamlit_authenticator as stauth
 from PIL import Image
 import requests
 # Bring your packages onto the path
-import sys, os
+import sys, os, io
 sys.path.append(os.path.abspath(os.path.join('..', 'src')))
 
 # Now do your import
-from Food_Search import *
+#from Food_Search import *
 
 def make_clickable(link):
     # target _blank to open new window
@@ -115,7 +117,6 @@ if authentication_status:
             if execute_recsys :
                 api=[]
                 api = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
-                print(api)
                 apicount = 0
                 apihit = [d['apihits'] for d in api]
                 
@@ -125,28 +126,16 @@ if authentication_status:
                         x.update({y: apicount})
                 result = updateApihits("UPDATE " + table_id + " SET apihits = " + str(apicount) + " WHERE username = " + ("'%s'" % (getCurrentUser)))
 
-                # res = requests.get(f"http://127.0.0.1:8000/{title}")
-                # output = pd.read_csv(res)
-                # print(output)
-                # out = output.get("message")
-                if apicount < 25:
-
-                    #df = pd.read_csv('https://storage.googleapis.com/get-cooking/dataset/PP_users.csv')
-                    
-                    # sample_data = df.head()
-                    # st.dataframe(sample_data)
-                    #st.write('The current recommendations is for ', title)
+                
+                if apicount < 25:          
                     if int(n_rec)>0:
-                        ingred = ingredients.split(", ")
-                        n_rec = int(n_rec)
+                        res = requests.get(f"http://127.0.0.1:8000/ingredients/{ingredients}/number/{n_rec}")
+                        output = res.json()
                         col1, col2, col3 = st.columns([1, 6, 1])
                         with col2:
                             gif_runner = st.image("https://storage.googleapis.com/get-cooking/cooking_gif.gif")
-                        recipe = search_ingredients(ingred , n_rec)
-                        # link is the column with hyperlinks
-                        recipe['recipe_urls'] = recipe['recipe_urls'].apply(make_clickable)
-                        recipe = recipe.to_html(escape=False)
-                        st.write(recipe, unsafe_allow_html=True)
+                        st.write(output, unsafe_allow_html=True)
+                        st.write("Success")
                         gif_runner.empty()
                     
                     elif int(n_rec) ==0: 

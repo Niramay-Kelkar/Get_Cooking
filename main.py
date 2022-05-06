@@ -10,8 +10,8 @@ def root():
 
 @app.get("/ingredients/{ingredients}/number/{num}")
 def getRecommendations(ingredients, num):
-    return get_pred(ingredients, num)
-    #return recipe
+    r =  get_pred(ingredients, num)
+    return r
 
 
 def get_pred(ingredients, number):
@@ -19,10 +19,7 @@ def get_pred(ingredients, number):
     n_rec = int(number)
     recipe = search_ingredients(ingred , n_rec)
     recipe['recipe_urls'] = recipe['recipe_urls'].apply(make_clickable)
-    #df = pd.read_json(recipe)
-    #recipe = recipe.to_html(escape=False)
-    #print(df)
-    print(type(recipe))
+    recipe = recipe.to_html(escape=False)
     return recipe
 
 def make_clickable(link):
