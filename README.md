@@ -96,6 +96,11 @@ The registry automatically gets uploaded to Storage bucket.
 ## Test our aplication
 To run our application, click on this link : https://share.streamlit.io/niramay-kelkar/get_cooking/main/Streamlit/streamlit.py
 
+## Other useful links:
+- Link to codelabs : https://codelabs-preview.appspot.com/?file_id=1wDG5Zv-_qauEu3lgfElM2hEnYv1rx5L9cm4OHCesvGk#2
+- Link to Github issues : https://github.com/Niramay-Kelkar/Get-Cooking/projects/1
+- Link to previous working repo : https://github.com/Niramay-Kelkar/Get-Cooking.git
+
 ### References
 
 1. Fast API Authentication : https://www.youtube.com/watch?v=6hTRw_HK3Ts
