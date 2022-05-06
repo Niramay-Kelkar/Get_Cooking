@@ -107,6 +107,7 @@ To run our application, click on this link : https://share.streamlit.io/niramay-
 ## Login credentials
 Username : jdoe
 Password : abcd
+##### Note: The credentials only work until it reaches the user limit that we have set up.
 
 ## Other useful links:
 - Link to codelabs : https://codelabs-preview.appspot.com/?file_id=1wDG5Zv-_qauEu3lgfElM2hEnYv1rx5L9cm4OHCesvGk#2
