@@ -172,7 +172,7 @@ if authentication_status:
         df_random['recipe_urls'] = df_random['recipe_urls'].apply(make_clickable)
         recipe = df_random.to_html(escape=False)
         st.write(recipe, unsafe_allow_html=True)
-        st.write(df_random)
+        #st.write(df_random)
 
     container2 = st.container()
     
