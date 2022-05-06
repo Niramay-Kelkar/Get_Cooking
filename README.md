@@ -62,6 +62,11 @@ If the user has no ingredients, provide recipes from cache
 - Streamlit.py - has the design of the UI with error handling
 - FoodSearch.py - takes the ingredients and gives dataframe as output based on the user input
 
+#### FastAPI
+
+- Input : User input of ingredients and no. of recommendendations
+- Hosted on GCP
+- Output : Recommended dataframe, which will be displayed by Streamlit.io
 
 #### Airflow 
 ##### Functionality:
