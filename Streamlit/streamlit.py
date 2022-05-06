@@ -14,7 +14,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', 'src')))
 
 # Now do your import
-from src.Food_Search import *
+from Food_Search import *
 
 def make_clickable(link):
     # target _blank to open new window
@@ -113,24 +113,52 @@ if authentication_status:
             execute_recsys = st.button("Give me recommendations!")
 
             if execute_recsys :
-                if int(n_rec)>0:
-                    ingred = ingredients.split(", ")
-                    n_rec = int(n_rec)
-                    col1, col2, col3 = st.columns([1, 6, 1])
-                    with col2:
-                        gif_runner = st.image("input/cooking_gif.gif")
-                    recipe = search_ingredients(ingred , n_rec)
-                    # link is the column with hyperlinks
-                    recipe['recipe_urls'] = recipe['recipe_urls'].apply(make_clickable)
-                    recipe = recipe.to_html(escape=False)
-                    st.write(recipe, unsafe_allow_html=True)
-                    gif_runner.empty()
+                api=[]
+                api = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+                print(api)
+                apicount = 0
+                apihit = [d['apihits'] for d in api]
                 
-                elif int(n_rec) ==0: 
-                    st.write("Please provide a value greater than zero. ")
-                
+                apicount = apihit[0] + 1
+                for x in api:
+                    for y in x:
+                        x.update({y: apicount})
+                result = updateApihits("UPDATE " + table_id + " SET apihits = " + str(apicount) + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+
+                # res = requests.get(f"http://127.0.0.1:8000/{title}")
+                # output = pd.read_csv(res)
+                # print(output)
+                # out = output.get("message")
+                if apicount < 25:
+
+                    #df = pd.read_csv('https://storage.googleapis.com/get-cooking/dataset/PP_users.csv')
+                    
+                    # sample_data = df.head()
+                    # st.dataframe(sample_data)
+                    #st.write('The current recommendations is for ', title)
+                    if int(n_rec)>0:
+                        ingred = ingredients.split(", ")
+                        n_rec = int(n_rec)
+                        col1, col2, col3 = st.columns([1, 6, 1])
+                        with col2:
+                            gif_runner = st.image("https://storage.googleapis.com/get-cooking/cooking_gif.gif")
+                        recipe = search_ingredients(ingred , n_rec)
+                        # link is the column with hyperlinks
+                        recipe['recipe_urls'] = recipe['recipe_urls'].apply(make_clickable)
+                        recipe = recipe.to_html(escape=False)
+                        st.write(recipe, unsafe_allow_html=True)
+                        gif_runner.empty()
+                    
+                    elif int(n_rec) ==0: 
+                        st.write("Please provide a value greater than zero. ")
+                    
+                    else:
+                        st.write("Please provide a valid input")
                 else:
-                    st.write("Please provide a valid input")
+                    st.write('User Request Limit Exceeded')
+                
+                
+                
 
     elif selection == 'No':
         client_bucket = storage.Client(credentials=credentials)
@@ -147,35 +175,188 @@ if authentication_status:
 
 
         df_random=pd.read_csv(downloaded_blob)
-
+        st.write('Here are the TOP 5 recommendations based on popularity!')
         st.write(df_random)
+    
+    st.markdown("### Browse collections! :eyes: ")
 
-        if st.button('Submit'):
-            api=[]
-            api = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
-            print(api)
-            apicount = 0
-            apihit = [d['apihits'] for d in api]
+
+    col11, col12, col13 = st.columns([1, 6, 1])
+    with col12:
+        gif_runner = st.image("https://storage.googleapis.com/get-cooking/collections.gif")
+
+
+    option = st.selectbox(
+     'Browse recipe collections!',
+     ('Seafood', 'Soup', 'Curry', 'Pasta', 'Salad', 'Chinese'))
+
+    
+    st.write('You selected:', option)
+    
+    execute_browse = st.button("Browse!")
+
+    if execute_browse:
+        print(option)
+
+
+        if option == "Seafood":
             
-            apicount = apihit[0] + 1
-            for x in api:
-                for y in x:
-                    x.update({y: apicount})
-            result = updateApihits("UPDATE " + table_id + " SET apihits = " + str(apicount) + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+            collection = search_collections(option)
+            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+            collection = collection.to_html(escape=False)
+            st.write(collection, unsafe_allow_html=True)
+        
+        if option == "Soup":
+            
+            collection = search_collections(option)
+            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+            collection = collection.to_html(escape=False)
+            st.write(collection, unsafe_allow_html=True)
 
-            # res = requests.get(f"http://127.0.0.1:8000/{title}")
-            # output = pd.read_csv(res)
-            # print(output)
-            # out = output.get("message")
-            if apicount < 15:
 
-                df = pd.read_csv('https://storage.googleapis.com/get-cooking/dataset/PP_users.csv')
-                
-                sample_data = df.head()
-                st.dataframe(sample_data)
-                st.write('The current recommendations is for ', title)
-            else:
-                st.write('User Request Limit Exceeded')
+        if option == "Curry":
+            
+            collection = search_collections(option)
+            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+            collection = collection.to_html(escape=False)
+            st.write(collection, unsafe_allow_html=True)
+
+
+        if option == "Pasta":
+            
+            collection = search_collections(option)
+            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+            collection = collection.to_html(escape=False)
+            st.write(collection, unsafe_allow_html=True)
+        
+        if option == "Salad":
+            
+            collection = search_collections(option)
+            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+            collection = collection.to_html(escape=False)
+            st.write(collection, unsafe_allow_html=True)
+
+
+        if option == "Chinese":
+            
+            collection = search_collections(option)
+            collection['recipe_urls'] = collection['recipe_urls'].apply(make_clickable)
+            collection = collection.to_html(escape=False)
+            st.write(collection, unsafe_allow_html=True)
+    
+    with st.sidebar.expander("How it works?", expanded=True):
+        st.markdown("## How it works? :thought_balloon:")
+        st.write(
+            "For an in depth overview of how we created this app, refer the link below."
+        )
+        blog1 = "https://codelabs-preview.appspot.com/?file_id=10H0eKtgY-nI27dKWndBheBJevna_0GfMpCd6DrCE-sg#1"
+        
+        st.markdown(
+            f" [Building a Recipe Recommendation App]({blog1})"
+
+        )
+
+        st.write("### Register here for weekly recipe collections!")
+        firstname = st.text_input("Enter First Name")
+        lastname = st.text_input("Enter Last Name")
+        email = st.text_input("Enter email")
+        
+        import re
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
+        if (re.fullmatch(regex, email))== None:
+            st.write("Enter a valid email address")
+
+        phone_number = st.text_input("Enter phone number")
+
+        Pattern = re.compile("(0|91)?[7-9][0-9]{9}")
+        if Pattern.match(phone_number) == None:
+            st.write("Enter valid phone number")
+
+        location = st.text_input("Enter location")
+
+        satisfaction = st.selectbox(
+        'Satisfied with the app?',
+        ('Yes', 'No'))
+
+
+        execute_register = st.button("Register!")
+
+        if execute_register:
+            user_register_entry = []
+            user_register_entry.append(firstname)
+            user_register_entry.append(lastname)
+            user_register_entry.append(email)
+            user_register_entry.append(phone_number)
+            user_register_entry.append(location)
+            user_register_entry.append(satisfaction)
+
+            #Writing user register details into a text file
+            # a for appending
+            #w if no file exists
+            with open("user_register.txt", "a") as output:      
+                #output.write(user_register_entry)
+
+                for item in user_register_entry:
+                    output.write("%s," % item)
+                output.write("\n")
+
+            import pandas as pd
+            df_user_registry = pd.read_csv(
+                'user_register.txt', sep=",",header=None)
+            
+            df_user_registry.to_csv("df_user_register.csv", sep='\t')
+
+
+
+            #Wrting user register details directly into dataframe
+            #Create new dataframe
+            df_new = pd.read_csv("UserRegistry.csv")
+            #'FirstName', 'LastName', 'Email', 'PhoneNo', 'Location', 'Satisfaction'
+            df_new = df_new.append({'FirstName' : firstname, 'LastName' : lastname, 'Email' : email, 'PhoneNo' :  phone_number , 'Location' :  location , 'Satisfaction':  satisfaction   }, 
+                ignore_index = True)
+
+            df_new.to_csv("UserRegistry.csv")
+
+
+            #Uploading into cloud
+            import json
+            from google.cloud import storage
+            from google.oauth2 import service_account
+
+            project_id = "BigDatatProject"
+            path_to_token = './bigdataproject-349122-0d6e9f2cf566.json'
+
+            storage_credentials= service_account.Credentials.from_service_account_file(path_to_token)
+            storage_client = storage.Client(project=project_id, credentials = storage_credentials)
+
+            #Destination
+
+
+            destination_bucket_name = "results_food_rec"
+            destination_bucket = storage_client.bucket(destination_bucket_name)
+
+
+            destination_blob_name = 'df_user_register.csv'
+            blob = destination_bucket.blob(destination_blob_name)
+
+
+            source_file_name = "df_user_register.csv"
+            blob.upload_from_filename('df_user_register.csv')
+
+            #Destination2
+
+            destination_bucket_name = "results_food_rec"
+            destination_bucket = storage_client.bucket(destination_bucket_name)
+
+
+            destination_blob_name = 'UserRegistry.csv'
+            blob = destination_bucket.blob(destination_blob_name)
+
+
+            source_file_name = "UserRegistry.csv"
+            blob.upload_from_filename('UserRegistry.csv')
+
            
 elif authentication_status == False:
     st.error('Username/password is incorrect')
