@@ -2,7 +2,8 @@ from pydoc import cli
 from random import sample
 import streamlit as st
 from google.oauth2 import service_account
-from google.cloud import bigquery, storage
+from google.cloud import bigquery
+from google.cloud import storage
 import numpy as np
 import pandas as pd
 import streamlit_authenticator as stauth

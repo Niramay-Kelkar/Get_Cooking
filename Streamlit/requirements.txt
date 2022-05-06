@@ -3,3 +3,4 @@ pandas
 numpy
 streamlit-authenticator
 google-cloud-bigquery
+google-cloud-storage
