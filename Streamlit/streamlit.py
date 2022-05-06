@@ -168,6 +168,9 @@ if authentication_status:
 
         df_random=pd.read_csv(downloaded_blob)
         st.write('Here are the TOP 5 recommendations based on popularity!')
+        df_random['recipe_urls'] = df_random['recipe_urls'].apply(make_clickable)
+        recipe = df_random.to_html(escape=False)
+        st.write(recipe, unsafe_allow_html=True)
         st.write(df_random)
     
     st.markdown("### Browse collections! :eyes: ")
