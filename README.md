@@ -34,7 +34,7 @@ Scraped data from : https://www.jamieoliver.com/
 
 
 ### Modules
-- Data Extraction and Pre-Processing
+- Data Scraping (using BeautifulSoup) and Pre-Processing 
 - API for Fetching Recipes - FastAPI
 - Streamlit UI
 - User Authentication and User Authorization - JWT
@@ -43,7 +43,7 @@ Scraped data from : https://www.jamieoliver.com/
 -- SendingEmails - when the user registers for subscriptions
 - Data Validation and Unit testing - Regex and Pytests
 - Deployment on Cloud (GCP)
-- Hosting Streamlit - Streamli.io
+- Hosting Streamlit - Streamlit.io
 - Visualizations - Big Query and Data Studio
 - Github Issues and Actions
 
