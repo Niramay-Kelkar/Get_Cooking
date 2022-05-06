@@ -2,12 +2,28 @@ from pydoc import cli
 from random import sample
 import streamlit as st
 from google.oauth2 import service_account
-from google.cloud import bigquery
+from google.cloud import bigquery, storage
 import numpy as np
 import pandas as pd
 import streamlit_authenticator as stauth
 from PIL import Image
 import requests
+# Bring your packages onto the path
+import sys, os
+sys.path.append(os.path.abspath(os.path.join('..', 'src')))
+
+# Now do your import
+from Food_Search import *
+
+def make_clickable(link):
+    # target _blank to open new window
+    # extract clickable text to display for your link
+    text = link.split('/')[5]
+    return f'<a target="_blank" href="{link}">{text}</a>'
+
+def validate_phone(phone_number):
+    if len(phone_number)<10:
+        raise ValueError("Phone number cannot be less than 10")
 
 # Create API client.
 credentials = service_account.Credentials.from_service_account_info(
@@ -59,51 +75,107 @@ authenticator = stauth.Authenticate(names,unames,hashed_passwords,
 name, authentication_status, username = authenticator.login('Login','main')
 
 if authentication_status:
-    
-    st.write("Success")
     authenticator.logout('Logout', 'main')
     st.write('Welcome *%s*' % (name))
     getCurrentUser = username
     apihits = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+    st.markdown("# *Get Cooking! :cooking:*")
     image = 'https://storage.cloud.google.com/get-cooking/image.jpeg'
     st.image(image, caption='', width=700)
-    st.title('Get Cooking')
-    st.write('An ML powered app!')
-
-    title = st.text_input('Recipe Name', '', placeholder='Enter the keyword')
-    st.write('The current recommendations is for ', title)
-   
     
-    if st.button('Submit'):
-        api=[]
-        api = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
-        print(api)
-        apicount = 0
-        apihit = [d['apihits'] for d in api]
+    st.markdown(
+        "## You have the ingredients, we have the recipes for you! :genie: "
+    )
+    st.markdown(
+        "### Given a list of ingredients, what different recipes can you make? :stew: "
+    )
+    
+    st.markdown(
+        "For example, what recipes can you make with the food in your kitchen? :bento: Our app will look through over thousands of recipes to find top matches for you! :mag: Try it out for yourself below! :arrow_down:"
+    )
+
+    st.text("")
+
+    selection = st.selectbox(
+     'Do you have any ingredients? Worry not if you do no have them; we will suggest you some easy recipes!',
+     ('Select','Yes', 'No'))
+
+    container = st.container()
+
+    if selection == 'Yes':
         
-        apicount = apihit[0] + 1
-        for x in api:
-            for y in x:
-                x.update({y: apicount})
-        result = updateApihits("UPDATE " + table_id + " SET apihits = " + str(apicount) + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+        with st.container():
+            ingredients = st.text_input("Enter ingredients you would like to cook with")
+            if str(ingredients).isnumeric():
+                st.write("Enter valid ingredient!")
+            n_rec = st.text_input("Enter number of recipes you want")
+            execute_recsys = st.button("Give me recommendations!")
 
-        # res = requests.get(f"http://127.0.0.1:8000/{title}")
-        # output = pd.read_csv(res)
-        # print(output)
-        # out = output.get("message")
-        print(apicount)
-        print(api)
-        if apicount < 15:
+            if execute_recsys :
+                if int(n_rec)>0:
+                    ingred = ingredients.split(", ")
+                    n_rec = int(n_rec)
+                    col1, col2, col3 = st.columns([1, 6, 1])
+                    with col2:
+                        gif_runner = st.image("input/cooking_gif.gif")
+                    recipe = search_ingredients(ingred , n_rec)
+                    # link is the column with hyperlinks
+                    recipe['recipe_urls'] = recipe['recipe_urls'].apply(make_clickable)
+                    recipe = recipe.to_html(escape=False)
+                    st.write(recipe, unsafe_allow_html=True)
+                    gif_runner.empty()
+                
+                elif int(n_rec) ==0: 
+                    st.write("Please provide a value greater than zero. ")
+                
+                else:
+                    st.write("Please provide a valid input")
 
-            df = pd.read_csv('https://storage.googleapis.com/get-cooking/dataset/PP_users.csv')
+    elif selection == 'No':
+        client_bucket = storage.Client(credentials=credentials)
+        bucket = client_bucket.get_bucket('get-cooking')
+        
+        blob = bucket.get_blob('dags/export_dataframe.csv')
+
+        downloaded_blob = blob.download_as_string()
+        from io import StringIO
+
+        s=str(downloaded_blob,'utf-8')
+
+        downloaded_blob = StringIO(s) 
+
+
+        df_random=pd.read_csv(downloaded_blob)
+
+        st.write(df_random)
+
+        if st.button('Submit'):
+            api=[]
+            api = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+            print(api)
+            apicount = 0
+            apihit = [d['apihits'] for d in api]
             
-            sample_data = df.head()
-            st.dataframe(sample_data)
-            st.write('The current recommendations is for ', title)
-        else:
-            st.write('User Request Limit Exceeded')
-        #apihits = run_query("SELECT apihits FROM " + table_id + " WHERE username = " + ("'%s'" % (getCurrentUser)))
+            apicount = apihit[0] + 1
+            for x in api:
+                for y in x:
+                    x.update({y: apicount})
+            result = updateApihits("UPDATE " + table_id + " SET apihits = " + str(apicount) + " WHERE username = " + ("'%s'" % (getCurrentUser)))
 
+            # res = requests.get(f"http://127.0.0.1:8000/{title}")
+            # output = pd.read_csv(res)
+            # print(output)
+            # out = output.get("message")
+            if apicount < 15:
+
+                df = pd.read_csv('https://storage.googleapis.com/get-cooking/dataset/PP_users.csv')
+                
+                sample_data = df.head()
+                st.dataframe(sample_data)
+                st.write('The current recommendations is for ', title)
+            else:
+                st.write('User Request Limit Exceeded')
+           
 elif authentication_status == False:
     st.error('Username/password is incorrect')
 elif authentication_status == None:
