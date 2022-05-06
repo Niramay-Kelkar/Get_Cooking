@@ -1,0 +1,24 @@
+{
+  "name": "Get_Cooking",
+  "version": "1.0.0",
+  "description": "Cooking Recommendations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Niramay-Kelkar/Get_Cooking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Niramay-Kelkar/Get_Cooking/issues"
+  },
+  "homepage": "https://github.com/Niramay-Kelkar/Get_Cooking#readme",
+  "dependencies": {
+    "@actions/core": "^1.8.0",
+    "@actions/github": "^5.0.1"
+  }
+}
