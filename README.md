@@ -87,14 +87,14 @@ Contains sample pytesting for the user input on Streamlit. The sample test cases
 
 <img width="817" alt="Visualization" src="https://user-images.githubusercontent.com/91446801/167113258-4f1073fb-26c1-4987-abf7-b933614f1a4e.png">
 
-
-#### GitHub Actions
-Find the workflow here : https://github.com/AkankshaTelagamsetty12/Get-Cooking-/actions/workflows/main.yml
-
 ##### Details:
  - Once a new user registers, the user registry gets updated
 The registry automatically gets uploaded to Storage bucket.
 - Using BigQuery and Data Studio, the visualization are obtained
+
+#### GitHub Actions
+Find the workflow here : https://github.com/AkankshaTelagamsetty12/Get-Cooking-/actions/workflows/main.yml
+
 
 ## Test our aplication
 To run our application, click on this link : https://share.streamlit.io/niramay-kelkar/get_cooking/main/Streamlit/streamlit.py
