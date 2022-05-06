@@ -129,13 +129,17 @@ if authentication_status:
                 
                 if apicount < 25:          
                     if int(n_rec)>0:
-                        res = requests.get(f"http://127.0.0.1:8000/ingredients/{ingredients}/number/{n_rec}")
+                        res = requests.get(f"https://8000-cs-123119029337-default.cs-us-east1-vpcf.cloudshell.dev/ingredients/{ingredients}/number/{n_rec}")
+                        #res = requests.get(f"http://35.224.165.168:8503/ingredients/{ingredients}/number/{n_rec}")
+                        
+                        #print(res)
                         output = res.json()
+                        #print(output)
                         col1, col2, col3 = st.columns([1, 6, 1])
                         with col2:
                             gif_runner = st.image("https://storage.googleapis.com/get-cooking/cooking_gif.gif")
+                        recipe = output.to_html(escape=False)
                         st.write(output, unsafe_allow_html=True)
-                        st.write("Success")
                         gif_runner.empty()
                     
                     elif int(n_rec) ==0: 
