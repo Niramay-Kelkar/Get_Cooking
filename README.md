@@ -38,14 +38,14 @@ Scraped data from : https://www.jamieoliver.com/
 - API for Fetching Recipes - FastAPI
 - Streamlit UI
 - User Authentication and User Authorization - JWT
-- Airflow workflows 
-- RecipeCache - For storing cache if the user has no ingredients and wants recipes to be suggested
-- SendingEmails - when the user registers for subscriptions
-- Data Validation and Unit testing
+- Airflow workflows using Cloud Composer
+-- RecipeCache - For storing cache if the user has no ingredients and wants recipes to be suggested
+-- SendingEmails - when the user registers for subscriptions
+- Data Validation and Unit testing - Regex and Pytests
 - Deployment on Cloud (GCP)
-- Hosting Streamlit
-- Visualizations
-- Github Issues 
+- Hosting Streamlit - Streamli.io
+- Visualizations - Big Query and Data Studio
+- Github Issues and Actions
 
 ### Folder Structure
 #### Streamlit UI
