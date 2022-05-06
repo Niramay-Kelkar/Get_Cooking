@@ -13,10 +13,10 @@ from PIL import Image
 import requests
 # Bring your packages onto the path
 import sys, os, io
-sys.path.append(os.path.abspath(os.path.join('..', 'src')))
+sys.path.append(os.path.abspath(os.path.join('..', '')))
 
 # Now do your import
-#from Food_Search import *
+from Food_Search import *
 
 def make_clickable(link):
     # target _blank to open new window
@@ -129,17 +129,16 @@ if authentication_status:
                 
                 if apicount < 25:          
                     if int(n_rec)>0:
-                        res = requests.get(f"https://8000-cs-123119029337-default.cs-us-east1-vpcf.cloudshell.dev/ingredients/{ingredients}/number/{n_rec}")
-                        #res = requests.get(f"http://35.224.165.168:8503/ingredients/{ingredients}/number/{n_rec}")
-                        
-                        #print(res)
-                        output = res.json()
-                        #print(output)
+                        ingred = ingredients.split(", ")
+                        n_rec = int(n_rec)
                         col1, col2, col3 = st.columns([1, 6, 1])
                         with col2:
                             gif_runner = st.image("https://storage.googleapis.com/get-cooking/cooking_gif.gif")
-                        recipe = output.to_html(escape=False)
-                        st.write(output, unsafe_allow_html=True)
+                        recipe = search_ingredients(ingred , n_rec)
+                        recipe['recipe_urls'] = recipe['recipe_urls'].apply(make_clickable)
+                        recipe = recipe.to_html(escape=False)
+                        st.write(recipe, unsafe_allow_html=True)
+                        
                         gif_runner.empty()
                     
                     elif int(n_rec) ==0: 
