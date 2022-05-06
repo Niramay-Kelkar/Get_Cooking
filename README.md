@@ -87,11 +87,14 @@ Contains sample pytesting for the user input on Streamlit. The sample test cases
 
 <img width="817" alt="Visualization" src="https://user-images.githubusercontent.com/91446801/167113258-4f1073fb-26c1-4987-abf7-b933614f1a4e.png">
 
-
 ##### Details:
  - Once a new user registers, the user registry gets updated
 The registry automatically gets uploaded to Storage bucket.
 - Using BigQuery and Data Studio, the visualization are obtained
+
+#### GitHub Actions
+Find the workflow here : https://github.com/AkankshaTelagamsetty12/Get-Cooking-/actions/workflows/main.yml
+
 
 ## Test our aplication
 To run our application, click on this link : https://share.streamlit.io/niramay-kelkar/get_cooking/main/Streamlit/streamlit.py
@@ -107,8 +110,10 @@ To run our application, click on this link : https://share.streamlit.io/niramay-
 2. Apache Airflow : https://insaid.medium.com/setting-up-apache-airflow-in-macos-2b5e86eeaf1
 3. Cloud Composer : https://towardsdatascience.com/airflow-by-google-a-first-impression-of-cloud-composer-f4d9f86358cf
 4. Send Emails Using Code : https://www.youtube.com/watch?v=Y_tnWTjTfzY
-5. Uploading to GCP : https://stackoverflow.com/questions/40683702/upload-csv-file-to-google-cloud-storage-using-python
-6. Unit Testing : https://www.youtube.com/watch?v=byaxg00Gf9I
-7. BigQuerying using files from GCP storage : https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
-
+5. Web Scraping : https://towardsdatascience.com/building-a-recipe-recommendation-system-297c229dda7b
+6. Uploading to GCP : https://stackoverflow.com/questions/40683702/upload-csv-file-to-google-cloud-storage-using-python
+7. Unit Testing : https://www.youtube.com/watch?v=byaxg00Gf9I
+8. BigQuerying using files from GCP storage : https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
+9. GitHub Actions : https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
+10. Streamlit UI : https://docs.streamlit.io/library/api-reference
 
