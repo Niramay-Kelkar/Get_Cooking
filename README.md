@@ -114,5 +114,6 @@ To run our application, click on this link : https://share.streamlit.io/niramay-
 6. Uploading to GCP : https://stackoverflow.com/questions/40683702/upload-csv-file-to-google-cloud-storage-using-python
 7. Unit Testing : https://www.youtube.com/watch?v=byaxg00Gf9I
 8. BigQuerying using files from GCP storage : https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
-
+9. GitHub Actions : https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
+10. Streamlit UI : https://docs.streamlit.io/library/api-reference
 
